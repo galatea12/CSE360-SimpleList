@@ -6,12 +6,23 @@
 * Description: SimpleListTest java class. This will make use of JUNIT4 libraries
 * to properly test the class created in SimpleList.java.
 */
-package assign1;
+package cse360assign2;
 
-import org.junit.Before;
 import org.junit.Test;
 
+
 import static org.junit.Assert.*;
+
+/*
+ * @author Gala Gutierrez
+ * @version 1.2
+ * 
+ * 1.2 new version update:
+ * tests addOverflow and complexToString have been modified to test new functionality.
+ * These test were modified since the program no longer drops the first integer to be
+ * input if the input is bigger than the size of the list. Now new space should be added
+ * every time max capacity is reached.
+ */
 
 public class SimpleListTest {
 
@@ -53,6 +64,12 @@ public class SimpleListTest {
     * added to the SimpleList object should not be found, yielding to an index of -1.
     * It also makes use of the toString method to check whether the last element added
     * was placed inside the correct position inside the SimpleList.
+    * 
+    * 1.2 version update:
+    * values are no longer "dropped" with new functionality. Instead, the array size is
+    * increased, to allow to have more values input than the original instantiation in the
+    * constructor. If toString is called, the first number input by the user should be 
+    * displayed instead of dropped. Eleven elements should be displayed.
     */
     @Test
     public void TestaddOverflow() {
@@ -69,7 +86,7 @@ public class SimpleListTest {
         testList.add(10);
         testList.add(11);
 
-        int expectedOverridden = -1;
+        int expectedOverridden = 10;
         int actualOverridden = testList.search(1);
 
         int expectedAdded = 0;
@@ -80,7 +97,7 @@ public class SimpleListTest {
         //checking that a new element was inserted
         expectedOutput += "\nPosition of last element added: " + expectedAdded;
         //checking the new element's position
-        expectedOutput += "\nResult of toString method: 11 10 9 8 7 6 5 4 3 2";
+        expectedOutput += "\nResult of toString method: 11 10 9 8 7 6 5 4 3 2 1";
 
         String actualOutput = "Position of overridden element: " + actualOverridden;
         actualOutput += "\nPosition of last element added: " + actualAdded;
@@ -90,7 +107,8 @@ public class SimpleListTest {
     }
 
     /*
-    * Basic remove case. Checks if an element is properly removed. In this case, the first element.
+    * Basic remove case. Checks if an element is properly removed. In this case, the 
+    * first element.
     */
     @Test
     public void Testremove() {
@@ -127,8 +145,8 @@ public class SimpleListTest {
     }
 
     /*
-    * Basic count test. It adds 6 elements and checks that count is working properly (counting
-    * each of the six elements and displaying expected output)
+    * Basic count test. It adds 6 elements and checks that count is working properly 
+    * (counting each of the six elements and displaying expected output)
     */
     @Test
     public void Testcount() {
@@ -147,7 +165,7 @@ public class SimpleListTest {
     }
 
     /*
-    * Basic test of the toString method. Checking that values are being inputted in
+    * Basic test of the toString method. Checking that values are being input in
     * reverse order (since each element is added to the beginning). Also checks that all
     * elements that have been inputted are also displayed.
     */
@@ -165,9 +183,15 @@ public class SimpleListTest {
     /*
     * Complex toString test case. It checks that an element is properly
     * added into the SimpleList when the list is full. It also checks that no extra
-    * whitespaces are added during printing.
+    * white-spaces are added during printing.
+    * 
+    * 1.2 version update:
+    * values are no longer "dropped" with new functionality. Instead, the array size is
+    * increased, to allow to have more values input than the original instantiation in the
+    * constructor. If toString is called, the first number input by the user should be 
+    * displayed instead of dropped. Eleven elements should be displayed.
     */
-    @org.junit.Test
+    @Test
     public void TestComplextoString() {
         SimpleList testList = new SimpleList();
         testList.add(1);
@@ -182,14 +206,14 @@ public class SimpleListTest {
         testList.add(10);
         testList.add(11);
         String actualOutput = testList.toString();
-        String expectedOutput = "11 10 9 8 7 6 5 4 3 2";
+        String expectedOutput = "11 10 9 8 7 6 5 4 3 2 1";
         assertEquals(expectedOutput, actualOutput);
     }
     /*
     * Basic search test case. It checks that the proper index of the element searched is
     * being returned.
     */
-    @org.junit.Test
+    @Test
     public void Testsearch() {
         SimpleList testList = new SimpleList();
         testList.add(1);
@@ -203,4 +227,6 @@ public class SimpleListTest {
 
         assertEquals(expectedOutput, actualOutput);
     }
+    
+    
 }
