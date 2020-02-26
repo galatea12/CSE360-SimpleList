@@ -13,6 +13,14 @@
 * the array are created.
 * 
 * 
+*
+* 2.0 version utilities:
+* New methods will be added to add functionality to the program. methods to be added:
+* append(int)
+* first()
+* size()
+*
+* 
 * 1.2 new version update:
 * New changes have been added that modify the behavior of methods add and remove.
 * Descriptions of the changes provided in documentation before each method has been provided.
@@ -21,7 +29,7 @@ package cse360assign2;
 
 /*
  * @author Gala Gutierrez
- * @version 1.2
+ * @version 2.0
  */
 
 public class SimpleList {
@@ -60,7 +68,6 @@ public class SimpleList {
     * increased.
     * 
     * @param newElement		New element to be added to front of list
-    * @return void
     */
     public void add(int newElement) {
         if (count < 10) {
@@ -102,7 +109,6 @@ public class SimpleList {
     * after deletion.
     * 
     * @param toDelete		the element to be searched and deleted if inside list
-    * @return void
     */
     public void remove(int toDelete){
         int position = -1;
@@ -111,9 +117,13 @@ public class SimpleList {
                 position = index;
         }
         if(position > -1) {
-            for (int index = position; index < count; index++) {
-                list[index] = list[index + 1];
-            }
+        	if(position < list.length - 1) {
+	            for (int index = position; index < count; index++) {
+	                list[index] = list[index + 1];
+	            }
+        	}
+        	else
+        		list[count - 1] = 0;
             count--;
             int minimumCapacity = list.length; //we need to find what size 75% represents
             minimumCapacity = (minimumCapacity * 3) / 4;
@@ -133,7 +143,6 @@ public class SimpleList {
     * Count method.
     * It will return the current value stored inside the count variable.
     * 
-    * @param none
     * @return count		returns the value held inside instance variable count
     */
     public int count(){
@@ -148,7 +157,6 @@ public class SimpleList {
     * array, separated by a whitespace. The last element will be concatenated at the end to avoid
     * an extra whitespace at the end of the String. It will finally return this String.
     * 
-    * @param none
     * @return result		resulting string after concatenating and formatting all members 
     * 						of list
     */
@@ -179,5 +187,72 @@ public class SimpleList {
         return indexNum;
     }
     
+
+    
+    /*
+     * Append method. return type void and one integer parameter. This method will append
+     * integer passed as parameter to the end of the list, as opposed to the add method, 
+     * which will add the integer to the start of the list.
+     * If there is no space in the list to add an extra element, the list will increase
+     * in size by 50%, then append the integer to the newly added space.
+     * 
+     * @param toAppend		element to append at the end of list
+     */
+    public void append(int toAppend) {
+    	if(count + 1 < list.length) {
+    		list[count] = toAppend;
+    		count++;
+    	}
+    	else {
+    		int incrementList = list.length + (list.length / 2);
+    		int[] newList = new int[incrementList];
+    		
+    		for(int index = 0; index < count; index++)
+    			newList[index] = list[index];
+    		
+    		newList[count] = toAppend;
+    		list = newList;
+    		count++;
+    	}
+    }
+    	
+    /*
+     * "first" method, no parameters needed and an integer will be returned. This method
+     * looks at the value inside the first element of the list and returns it.
+     * 
+     * @return result		will return the value of element at position 0 inside list
+     */
+    public int first(){
+    	int result = list[0];
+    	return result;
+    }
+    
+    /*
+     * last method. It will return the value of the last element in the list. If no 
+     * elements have been added or appended, it will return -1
+     * 
+     * @return result		will return the value of the element at position count - 1
+     */
+    public int last() {
+    	int result = list[count - 1];
+    	return result;
+    }
+    
+    /*
+     * size method, no parameters needed and an integer will be returned. This method will
+     * return the size of the list.
+     * 
+     * @return size			will return the current size of the list
+     */
+    public int size() {
+    	int size = list.length;
+    	return size;
+    }
+
+
+
+
+
+
     
 }

@@ -15,9 +15,15 @@ import static org.junit.Assert.*;
 
 /*
  * @author Gala Gutierrez
- * @version 1.2
+ * @version 2.0
  * 
- * 1.2 new version update:
+ *
+ * 2.0 new version update:
+ * new test cases are added to verify implementation and functionality of newly added
+ * functionality.
+ *
+ * 
+ * 1.2 update:
  * tests addOverflow and complexToString have been modified to test new functionality.
  * These test were modified since the program no longer drops the first integer to be
  * input if the input is bigger than the size of the list. Now new space should be added
@@ -145,6 +151,37 @@ public class SimpleListTest {
     }
 
     /*
+     * Complex remove test case. It checks for the case there are duplicates
+     * inside the list. The remove method should remove only the first occurrence of the
+     * element to be removed. It verifies that the element still exists on the list
+     * after removal (since it was a duplicate) and that the next number was 
+     * successfully moved to the correct position.
+     */
+    
+    @Test
+    public void TestComplexremove() {
+        SimpleList testList = new SimpleList();
+        testList.add(1);
+        testList.add(2);
+        testList.add(3);
+        testList.add(3);
+        testList.add(5);
+        testList.add(6);
+
+        testList.remove(3);
+        int expectDuplicate = 2;
+        int actualDuplicate = testList.search(3);
+        int expectNextNum = 1;
+        int actualNextNum = testList.search(5);
+        
+        String expectedOutput = expectDuplicate + " " + expectNextNum;
+        String actualOutput = actualDuplicate + " " + actualNextNum;
+        
+
+        assertEquals(expectedOutput, actualOutput);
+    }
+    
+    /*
     * Basic count test. It adds 6 elements and checks that count is working properly 
     * (counting each of the six elements and displaying expected output)
     */
@@ -226,6 +263,231 @@ public class SimpleListTest {
         int actualOutput = testList.search(3);
 
         assertEquals(expectedOutput, actualOutput);
+    }
+    
+    /*
+     * Complex search test case. It verifies that the search method returns
+     * the first occurrence of duplicate items.
+     */
+    @Test
+    public void TestComplexSearch() {
+    	SimpleList testList = new SimpleList();
+        testList.add(1);
+        testList.add(2);
+        testList.add(3);
+        testList.add(3);
+        testList.add(5);
+        
+        int expectedOutput = 2;
+        int actualOutput = testList.search(3);
+        
+        assertEquals(expectedOutput, actualOutput);
+    }
+
+    
+    /*
+     * basic size testing. Original SimpleList object f=should be instantiated
+     * to 10 elements array. This checks that size is correctly outputting size.
+     */
+    
+    @Test
+    public void TestSize() {
+    	SimpleList testList = new SimpleList();
+    	int originalSize = testList.size();
+    	int expectedOriginalSize = 10;
+    	
+    	assertEquals(expectedOriginalSize, originalSize);
+    }
+    
+    /*
+     * More complex size testing. We are testing the newly added functionality
+     * of the add method, which increases the size of the list by 50% if there is
+     * no more space left. It should return 15 starting off a basic list.
+     */
+    
+    @Test
+    public void TestIncreasedSize() {
+    	SimpleList testList = new SimpleList();
+    	
+    	testList.add(1);
+        testList.add(2);
+        testList.add(3);
+        testList.add(4);
+        testList.add(5);
+        testList.add(6);
+        testList.add(7);
+        testList.add(8);
+        testList.add(9);
+        testList.add(10);
+        testList.add(11);
+        
+        int newSize = testList.size();
+        int expectedNewSize = 15;
+        
+        assertEquals(expectedNewSize, newSize);
+        
+    }
+    
+    /*
+     * More complex size testing. It tests for the newly added functionality
+     * of the remove method, where if 25% of the list is not being used, it should
+     * reduce the size of the list. After adding 11 numbers, the list size should
+     * be 15. 75% of 15 is 11. If count less than 75% (11) it should reduce the size
+     * to 75% of its current size (so from 15 to 11 due to integer division)
+     */
+    
+    @Test
+    public void TestReducedSize() {
+    	SimpleList testList = new SimpleList();
+    	
+    	testList.add(1);
+        testList.add(2);
+        testList.add(3);
+        testList.add(4);
+        testList.add(5);
+        testList.add(6);
+        testList.add(7);
+        testList.add(8);
+        testList.add(9);
+        testList.add(10);
+        testList.add(11);
+        
+        testList.remove(11);
+        testList.remove(10);
+        
+        
+        int newSize = testList.size();
+        int expectedNewSize = 11;
+        
+        assertEquals(expectedNewSize, newSize);
+        
+    }
+    
+    /*
+     * Basic first method test case. It returns the last value input by user using
+     * add method, which adds each value to the front of the list in each call.
+     */
+    
+    @Test
+    public void TestFirst() {
+    	SimpleList testList = new SimpleList();
+    	testList.add(1);
+        testList.add(2);
+        testList.add(3);
+        testList.add(4);
+        testList.add(5);
+        testList.add(6);
+        testList.add(7);
+        testList.add(8);
+        testList.add(9);
+        testList.add(10);
+        testList.add(11);
+        
+        int actualFirst = testList.first();
+        int expectedFirst = 11;
+        
+        assertEquals(expectedFirst, actualFirst);
+    }
+    
+    /*
+     * Basic last method test case. It should print the first element to be added
+     * to list, since add method adds a new element to the front of the list.
+     */
+    
+    @Test
+    public void TestLast() {
+    	SimpleList testList = new SimpleList();
+    	testList.add(1);
+        testList.add(2);
+        testList.add(3);
+        testList.add(4);
+        testList.add(5);
+        testList.add(6);
+        testList.add(7);
+        testList.add(8);
+        testList.add(9);
+        testList.add(10);
+        testList.add(11);
+        
+        int expectedLast = 1;
+        int actualLast = testList.last();
+        
+        assertEquals(expectedLast, actualLast);
+    }
+    
+    /*
+     * Basic test case for append. It should return the value of the 
+     * only appended element during the call.
+     */
+    @Test
+    public void TestBasicAppend() {
+    	SimpleList testList = new SimpleList();
+    	testList.add(1);
+        testList.add(2);
+        testList.add(3);
+        testList.add(4);
+        testList.add(5);
+        testList.add(6);
+        testList.add(7);
+        testList.add(8);
+        testList.add(9);
+        testList.append(10);
+        
+        int expectedLast = 10;
+        int actualLast = testList.last();
+        
+        assertEquals(expectedLast, actualLast);
+    }
+    
+    /*
+     * Append complex case. It should return the value of the last 
+     * appended element, which was followed by 2 add calls.
+     */
+    @Test
+    public void TestComplexAppend() {
+    	SimpleList testList = new SimpleList();
+    	testList.add(1);
+        testList.append(2);
+        testList.add(3);
+        testList.append(4);
+        testList.add(5);
+        testList.append(6);
+        testList.add(7);
+        testList.append(8);
+        testList.add(9);
+        testList.add(10);
+        
+        int expectedLast = 8;
+        int actualLast = testList.last();
+        
+        assertEquals(expectedLast, actualLast);
+    }
+    
+    /*
+     * Remove and append functionality combination test case. After removing
+     * the last appended item, it should be followed by the previous appended
+     * item in the list.
+     */
+    
+    @Test
+    public void TestRemoveAppend() {
+    	SimpleList testList = new SimpleList();
+    	testList.add(1);
+        testList.append(2);
+        testList.add(3);
+        testList.append(4);
+        testList.add(5);
+        testList.append(6);
+        testList.add(7);
+        testList.append(8);
+        testList.add(9);
+        testList.add(10);
+        
+        testList.remove(8);
+        int expectedLast = 6;
+        int actualLast = testList.last();
+        
+        assertEquals(expectedLast, actualLast);
     }
     
     
